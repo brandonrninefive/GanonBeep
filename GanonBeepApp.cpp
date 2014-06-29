@@ -23,8 +23,12 @@ IMPLEMENT_APP(GanonBeepApp);
 bool GanonBeepApp::OnInit()
 {
     GanonBeepFrame* frame = new GanonBeepFrame(NULL, _("GanonBeep"));
+	
+#ifdef __WINDOWS__
     frame->SetIcon(wxICON(aaaa)); // To Set App Icon
-    frame->Show();
+#endif
+	
+	frame->Show();
 
     return true;
 }
