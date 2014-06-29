@@ -76,7 +76,15 @@ GanonBeepFrame::GanonBeepFrame(wxFrame *frame, const wxString& title)
 
     nameTitle = new wxStaticText(this,idNameTitle,"Change Stream Players:",wxPoint(180,15),wxSize(100,20));
     nameTitle->SetFont(wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_LIGHT));
-    nameBox = new wxComboBox(this,idNameBox,"",wxPoint(20,45),wxSize(450,25),0,NULL,wxCB_SORT | wxCB_READONLY);
+    
+    long nameBoxStyle = wxCB_READONLY;
+
+#ifndef __APPLE__
+    nameBoxStyle |= wxCB_SORT;
+#endif
+    
+    nameBox = new wxComboBox(this,idNameBox,"",wxPoint(20,45),wxSize(450,25),0,NULL,nameBoxStyle);
+
     p1AddButton = new wxButton(this,idP1AddButton,"Add as P1",wxPoint(10,80),wxSize(100,20));
     p2AddButton = new wxButton(this,idP2AddButton,"Add as P2",wxPoint(130,80),wxSize(100,20));
     p3AddButton = new wxButton(this,idP3AddButton,"Add as P3",wxPoint(260,80),wxSize(100,20));
@@ -116,8 +124,11 @@ GanonBeepFrame::GanonBeepFrame(wxFrame *frame, const wxString& title)
     else
         wxMessageBox("GanonBeep could not red from Names.txt!");
     file.close();
-
-    nameBox->SetSelection(0);
+    
+    if(nameBox->GetCount() > 0)
+    {
+        nameBox->SetSelection(0);
+    }
 
     file.open("Player1.txt");
     if(file.is_open())
@@ -159,7 +170,7 @@ GanonBeepFrame::GanonBeepFrame(wxFrame *frame, const wxString& title)
         wxMessageBox("GanonBeep could not read from Player4.txt!","Error!");
     file.close();
 
-    if(NameIsTaken(nameBox->GetString(nameBox->GetCurrentSelection())) || nameBox->GetString(nameBox->GetCurrentSelection()) == "")
+    if(nameBox->GetCurrentSelection() == wxNOT_FOUND || NameIsTaken(nameBox->GetString(nameBox->GetCurrentSelection())))
     {
         p1AddButton->Disable();
         p2AddButton->Disable();
@@ -238,7 +249,7 @@ void GanonBeepFrame::OnNewPlayerTag(wxCommandEvent &event)
     else
         wxMessageBox("You either entered a blank player tag, canceled your entry, or the player tag you entered already exists!","Error!");
 
-    if(nameBox->GetString(nameBox->GetCurrentSelection()) == "")
+    if(nameBox->GetCurrentSelection() == wxNOT_FOUND)
         nameBox->SetSelection(0);
 
     if(!NameIsTaken(nameBox->GetString(nameBox->GetCurrentSelection())))
@@ -259,7 +270,7 @@ void GanonBeepFrame::OnNewPlayerTag(wxCommandEvent &event)
 
 void GanonBeepFrame::OnEditPlayerTag(wxCommandEvent &event)
 {
-    if(nameBox->GetString(nameBox->GetCurrentSelection()) != "")
+    if(nameBox->GetCurrentSelection() != wxNOT_FOUND)
     {
         wxString tag = wxGetTextFromUser("Please enter a replacement for the tag '" + nameBox->GetString(nameBox->GetCurrentSelection()) + "'.","Edit Tag",nameBox->GetString(nameBox->GetCurrentSelection()));
         if(tag == "")
@@ -450,7 +461,7 @@ void GanonBeepFrame::OnP4Remove(wxCommandEvent &event)
 
 void GanonBeepFrame::OnPlayerRemove(wxCommandEvent &event)
 {
-    if(nameBox->GetString(nameBox->GetCurrentSelection()) != "")
+    if(nameBox->GetCurrentSelection() != wxNOT_FOUND)
     {
         int answer = wxMessageDialog(this,"Are you sure you want to delete the currently-selected player tag?","Alert!",wxCENTER | wxYES_NO).ShowModal();
         if(answer == wxID_YES)
@@ -485,9 +496,13 @@ void GanonBeepFrame::OnPlayerRemove(wxCommandEvent &event)
                 WriteToFile("Player4.txt",p4Text);
             }
             nameBox->Delete(nameBox->GetCurrentSelection());
-            nameBox->SetSelection(0);
+            
+            if(nameBox->GetCount() > 0)
+            {
+                nameBox->SetSelection(0);
+            }
 
-            if(!NameIsTaken(nameBox->GetString(nameBox->GetCurrentSelection())) && nameBox->GetString(nameBox->GetCurrentSelection()) != "")
+            if(nameBox->GetCurrentSelection() != wxNOT_FOUND && !NameIsTaken(nameBox->GetString(nameBox->GetCurrentSelection())))
             {
                 p1AddButton->Enable();
                 p2AddButton->Enable();
