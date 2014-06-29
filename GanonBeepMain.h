@@ -24,7 +24,7 @@ class GanonBeepFrame: public wxFrame
     private:
         enum
         {
-            idMenuNewPlayerTag = 0,
+            idMenuNewPlayerTag = 1,
             idMenuEditPlayerTag,
             idMenuRemovePlayerTag,
             idMenuQuit,
