@@ -72,17 +72,17 @@ GanonBeepFrame::GanonBeepFrame(wxFrame *frame, const wxString& title)
 
     CreateStatusBar(2);
     SetStatusText("Welcome to GanonBeep!",0);
-    SetStatusText("Version 2.0", 1);
+    SetStatusText("Version 2.0.1", 1);
 
     nameTitle = new wxStaticText(this,idNameTitle,"Change Stream Players:",wxPoint(180,15),wxSize(100,20));
     nameTitle->SetFont(wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_LIGHT));
-    
+
     long nameBoxStyle = wxCB_READONLY;
 
 #ifndef __APPLE__
     nameBoxStyle |= wxCB_SORT;
 #endif
-    
+
     nameBox = new wxComboBox(this,idNameBox,"",wxPoint(20,45),wxSize(450,25),0,NULL,nameBoxStyle);
 
     p1AddButton = new wxButton(this,idP1AddButton,"Add as P1",wxPoint(10,80),wxSize(100,20));
@@ -124,7 +124,7 @@ GanonBeepFrame::GanonBeepFrame(wxFrame *frame, const wxString& title)
     else
         wxMessageBox("GanonBeep could not red from Names.txt!");
     file.close();
-    
+
     if(nameBox->GetCount() > 0)
     {
         nameBox->SetSelection(0);
@@ -330,7 +330,7 @@ void GanonBeepFrame::OnHowTo(wxCommandEvent &event)
 
 void GanonBeepFrame::OnAbout(wxCommandEvent &event)
 {
-    wxMessageBox("GanonBeep is a live streaming tool and stat-tracker based around the Super Smash Bros. series.  It is currently being developed by the members of SiG Melee, a 'Special Interest Group' belonging to NJIT's chapter of ACM.  Be sure to check out our live stream at http://www.twitch.tv/sigmelee!\n\nInitial Build Created By: Brandon Ruggles\n\nCurrent Version Contributors: Brandon Ruggles", "About");
+    wxMessageBox("GanonBeep is a live streaming tool and stat-tracker based around the Super Smash Bros. series.  It is currently being developed by the members of SiG Melee, a 'Special Interest Group' belonging to NJIT's chapter of ACM.  Be sure to check out our live stream at http://www.twitch.tv/sigmelee!\n\nInitial Build Created By: Brandon Ruggles\n\nOther Major Contributors: Grant Butler", "About");
 }
 
 void GanonBeepFrame::OnPlayerSelect(wxCommandEvent &event)
@@ -496,7 +496,7 @@ void GanonBeepFrame::OnPlayerRemove(wxCommandEvent &event)
                 WriteToFile("Player4.txt",p4Text);
             }
             nameBox->Delete(nameBox->GetCurrentSelection());
-            
+
             if(nameBox->GetCount() > 0)
             {
                 nameBox->SetSelection(0);

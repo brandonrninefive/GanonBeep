@@ -6,7 +6,7 @@
 	<fstream>
 	<string>
 
-1403722971 c:\users\brandon\desktop\folders\programming\c++\ganonbeep\ganonbeepmain.h
+1404060318 c:\users\brandon\desktop\folders\programming\c++\ganonbeep\ganonbeepmain.h
 	<wx/wx.h>
 	"GanonBeepApp.h"
 
@@ -1946,7 +1946,7 @@
 
 1402804558 c:\wxwidgets-3.0.1\include\wx\msw\rcdefs.h
 
-1403548164 source:c:\users\brandon\desktop\folders\programming\c++\ganonbeep\ganonbeepapp.cpp
+1404060318 source:c:\users\brandon\desktop\folders\programming\c++\ganonbeep\ganonbeepapp.cpp
 	"wx_pch.h"
 	"GanonBeepApp.h"
 	"GanonBeepMain.h"
