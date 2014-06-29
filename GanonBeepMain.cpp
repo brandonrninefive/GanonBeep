@@ -76,8 +76,16 @@ GanonBeepFrame::GanonBeepFrame(wxFrame *frame, const wxString& title)
 
     nameTitle = new wxStaticText(this,idNameTitle,"Change Stream Players:",wxPoint(180,15),wxSize(100,20));
     nameTitle->SetFont(wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_LIGHT));
-    nameBox = new wxComboBox(this,idNameBox,"",wxPoint(20,45),wxSize(450,25),0,NULL,wxCB_SORT | wxCB_READONLY);
-    p1AddButton = new wxButton(this,idP1AddButton,"Add as P1",wxPoint(10,80),wxSize(100,20));
+	
+	long nameBoxStyle = wxCB_READONLY;
+
+#ifndef __APPLE__
+	nameBoxStyle |= wxCB_SORT;
+#endif
+	
+    nameBox = new wxComboBox(this,idNameBox,"",wxPoint(20,45),wxSize(450,25),0,NULL,nameBoxStyle);
+
+	p1AddButton = new wxButton(this,idP1AddButton,"Add as P1",wxPoint(10,80),wxSize(100,20));
     p2AddButton = new wxButton(this,idP2AddButton,"Add as P2",wxPoint(130,80),wxSize(100,20));
     p3AddButton = new wxButton(this,idP3AddButton,"Add as P3",wxPoint(260,80),wxSize(100,20));
     p4AddButton = new wxButton(this,idP4AddButton,"Add as P4",wxPoint(380,80),wxSize(100,20));
