@@ -7,6 +7,7 @@ INCLUDES=
 EXECUTABLE=bin/Release/GanonBeep
 
 all: dirs $(SOURCES) $(EXECUTABLE)
+	cp *.txt bin/Release/
 
 dirs:
 	mkdir -p obj/Release/
