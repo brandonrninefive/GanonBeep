@@ -124,8 +124,11 @@ GanonBeepFrame::GanonBeepFrame(wxFrame *frame, const wxString& title)
     else
         wxMessageBox("GanonBeep could not red from Names.txt!");
     file.close();
-
-    nameBox->SetSelection(0);
+	
+	if(nameBox->GetCount() > 0)
+	{
+		nameBox->SetSelection(0);
+	}
 
     file.open("Player1.txt");
     if(file.is_open())
@@ -167,13 +170,16 @@ GanonBeepFrame::GanonBeepFrame(wxFrame *frame, const wxString& title)
         wxMessageBox("GanonBeep could not read from Player4.txt!","Error!");
     file.close();
 
-    if(NameIsTaken(nameBox->GetString(nameBox->GetCurrentSelection())) || nameBox->GetString(nameBox->GetCurrentSelection()) == "")
-    {
-        p1AddButton->Disable();
-        p2AddButton->Disable();
-        p3AddButton->Disable();
-        p4AddButton->Disable();
-    }
+	if(nameBox->GetCount() > 0)
+	{
+		if(NameIsTaken(nameBox->GetString(nameBox->GetCurrentSelection())) || nameBox->GetString(nameBox->GetCurrentSelection()) == "")
+		{
+			p1AddButton->Disable();
+			p2AddButton->Disable();
+			p3AddButton->Disable();
+			p4AddButton->Disable();
+		}
+	}
 
     if(p1Text == "")
         p1RemoveButton->Disable();
